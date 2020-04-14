@@ -65,7 +65,7 @@ where e.keyword = :keyword
     }
 
     try {
-      const row: Row | void = getOwner.get({ keyword }) as (Row | void);
+      const row: Row | void = getOwner.get({ keyword }) as Row | void;
       if (!row) {
         return ['', NotFoundError];
       } else {
@@ -116,7 +116,7 @@ where keyword = :keyword
   public loadMeta(): [MetaRow | null, Error | null] {
     const stmt = this.db.prepare('select * from wittymeta');
     try {
-      const row = stmt.get() as (MetaRow | void);
+      const row = stmt.get() as MetaRow | void;
       if (!row) {
         return [null, NotFoundError];
       }

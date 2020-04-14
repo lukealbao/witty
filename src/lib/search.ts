@@ -55,12 +55,14 @@ async function fetchImages(q: string, opts: object | null, count: number = 100):
 // added by extending the search with the following terms: square; animated; icon.
 export async function searchGoogle(term: string, count: number = 100): Promise<string[]> {
   term = term.replace(/\s+/g, '');
-  const results: string[] = (await Promise.all([
-    fetchImages(term, { tbs: ['iar:s'] }, count),
-    fetchImages(term, null, count),
-    fetchImages(term, { tbs: ['itp:animated'] }, count),
-    fetchImages(term, { tbs: ['isz:i'] }, count),
-  ])).flat();
+  const results: string[] = (
+    await Promise.all([
+      fetchImages(term, { tbs: ['iar:s'] }, count),
+      fetchImages(term, null, count),
+      fetchImages(term, { tbs: ['itp:animated'] }, count),
+      fetchImages(term, { tbs: ['isz:i'] }, count),
+    ])
+  ).flat();
 
   const deduped: string[] = [...new Set(results)];
 

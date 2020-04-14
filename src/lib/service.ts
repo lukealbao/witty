@@ -237,6 +237,10 @@ export default class WittyService {
 
     // --- Reply
     await this.sendMessage(`Thank you, ${user}! You have expanded our world with \`:${keyword}:\` => :${keyword}:`);
+    // There appears to be a small race condition internal to slack for adding the reaction.
+    await new Promise(res => {
+      setTimeout(res, 3000);
+    });
     await this.addReaction(msg.channel, msg.ts, keyword);
   }
 
@@ -364,7 +368,7 @@ export default class WittyService {
     const ownerName = await this.userIdToDisplayName(owner);
 
     const keyword = emoji.replace(/:/g, '');
-    const reply = await this.sendMessage(`${user}, you can thank ${ownerName} for their handywork.`);
+    const reply = await this.sendMessage(`${user}, you can thank ${ownerName} for their handiwork.`);
     if (reply) {
       await this.addReaction(msg.channel, reply.ts, keyword);
     }
